@@ -1,0 +1,13 @@
+*.iml
+.DS_Store
+.allure/
+.idea/
+.settings/
+reports/
+target/
+test-output/
+allure-results/
+.classpath
+.project
+settings.xml
+*TestContext.java
