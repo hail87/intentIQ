@@ -14,17 +14,15 @@ public abstract class Steps {
 
     private static final Logger logger = LoggerFactory.getLogger(Steps.class);
 
-    public static String verifyExpectedResults(int ar, int er) {
-        String actualResult = String.valueOf(ar);
-        String expectedResult = String.valueOf(er);
+    public String verifyExpectedResults(String actualResult, String expectedResult) {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         String callingMethod = stackTraceElements[2].getMethodName();
         String callingClass = Util.getCallingClass().getName().split("\\.")[Util.getCallingClass().getName().split("\\.").length - 1];
         if (actualResult.equalsIgnoreCase(expectedResult)) {
-            logger.info(String.format("\n[%s:%s]: expected '%s' and actual '%s' results are the same\n", callingClass, callingMethod, expectedResult, actualResult));
+            logger.info(String.format("\n[%s:%s]: expectedResult :\n '%s' \nand actualResult :\n '%s' \nare the same!\n", callingClass, callingMethod, expectedResult, actualResult));
             return "";
         } else {
-            String message = String.format("\n[%s:%s]: expected '%s' and actual '%s' results are NOT the same\n", callingClass, callingMethod, expectedResult, actualResult);
+            String message = String.format("\n[%s:%s]: expectedResult :\n '%s' \nand actualResult :\n '%s' \nare NOT the same!\n", callingClass, callingMethod, expectedResult, actualResult);
             logger.error(message);
             return message;
         }
