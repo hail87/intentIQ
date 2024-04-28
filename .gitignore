@@ -10,4 +10,5 @@ allure-results/
 .classpath
 .project
 settings.xml
+test_data.txt
 *TestContext.java

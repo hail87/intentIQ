@@ -60,9 +60,6 @@ public class Message extends Element {
         waitForElementToDisappear(btnCancelAbsolute, webDriver);
     }
 
-//    public String getText() {
-//    }
-
     public boolean isVisible() {
         return super.isVisible(locator, webDriver);
     }
