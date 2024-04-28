@@ -8,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import common.Context.Context;
 import common.Context.UiTestContext;
-import steps.UiSteps.BagsSteps;
-import steps.UiSteps.MainSteps;
-import steps.UiSteps.ShippingSteps;
-import steps.UiSteps.VerificationSteps;
+import steps.UiSteps.*;
 
 
 public class SmokeTestSuite extends UiTestClass {
@@ -40,11 +37,14 @@ public class SmokeTestSuite extends UiTestClass {
         mainSteps.closeWelcomePopUp();
         BagsSteps bagsSteps = mainSteps.goToBags();
         bagsSteps.addFirstBagToShoppingCart();
-        ShippingSteps shippingSteps = new ShippingSteps(mainSteps.openShippingPage());
-        VerificationSteps verificationSteps = shippingSteps.fillAllFieldsAndClickNext("shippingInformation");
-        String error = "";
-        error = verificationSteps.checkPostRequestForShippingInformation(
-                Context.getTestContext(testInfo).getWebDriver(), "shippingInformation");
-        Assertions.assertTrue(error.isEmpty(), error);
+        ShippingSteps shippingSteps = mainSteps.openShippingPage();
+        ReviewPaymentsSteps reviewPaymentsSteps = shippingSteps.fillAllFieldsAndClickNext("shippingInformation");
+        StringBuilder errorMessage = new StringBuilder();
+        errorMessage.append(reviewPaymentsSteps.checkPostRequestForShippingInformation(
+                Context.getTestContext(testInfo).getWebDriver(), "shippingInformation"));
+        ConfirmationSteps confirmationSteps = reviewPaymentsSteps.placeOrder();
+        errorMessage.append(confirmationSteps.getAndSaveOrderIdToFile("test_data.txt"));
+
+        Assertions.assertTrue(errorMessage.toString().isEmpty(), errorMessage.toString());
     }
 }

@@ -2,10 +2,7 @@ package common;
 
 public enum MyPath {
 
-    RESOURCES_PATH ("src/resources/"),
-    JSON_PATH (RESOURCES_PATH.getPath() + "json/"),
-    SQL_SCRIPTS_PATH (RESOURCES_PATH.getPath() + "SQL/"),
-    LOG_FILE ("target/logs/test1.log");
+    RESOURCES_PATH ("src/resources/");
 
     private final String path;
 

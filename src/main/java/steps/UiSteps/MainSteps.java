@@ -35,9 +35,9 @@ public class MainSteps extends Steps {
         webDriver.get(url);
     }
 
-    public ShippingPage openShippingPage() {
+    public ShippingSteps openShippingPage() {
         openUrl(DataUtils.getPropertyValue("url.properties", "shoppingCart"));
-        return new ShippingPage(webDriver);
+        return new ShippingSteps(new ShippingPage(webDriver));
     }
 
     public void openSettingsPage () {

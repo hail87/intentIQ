@@ -1,14 +1,11 @@
 package utils;
 
-import com.google.common.util.concurrent.SimpleTimeLimiter;
-import com.google.common.util.concurrent.TimeLimiter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import common.MyPath;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +14,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -80,14 +76,6 @@ public class DataUtils {
         cal.setTime(ts);
         cal.add(Calendar.HOUR, -4);
         return sdf.format(cal.getTime());
-    }
-
-    public static void updateTestRailPropertyParameter(String parameter, String value) throws IOException {
-        updatePropertyParameter("test_rail_config.properties", parameter, value);
-    }
-
-    public static String getTestRailPropertyValue(String parameter) throws IOException {
-        return getPropertyValue("test_rail_config.properties", parameter);
     }
 
     public static void updatePropertyParameter(String propertyFileName, String parameter, String value) throws IOException {

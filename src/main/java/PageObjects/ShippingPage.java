@@ -4,6 +4,7 @@ import elements.Button;
 import elements.DropDown;
 import elements.TextField;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,15 +27,23 @@ public class ShippingPage extends PageObject {
     By rbFirstShippingMethod = By.xpath("//form[@id='co-shipping-method-form']//tr/td");
     By btnNext = By.xpath("//*[@id='shipping-method-buttons-container']//button[@type='submit']");
 
+    By btnProceedToCheckout = By.xpath("//div[@id='cart-totals']/..//button[@title='Proceed to Checkout']");
+
     public ShippingPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         super.webDriver = webDriver;
         waitForJStoLoad();
-        waitForElementToLoad(txtEmailAddress);
+        try {
+            waitForElementToLoad(txtEmailAddress);
+        } catch (TimeoutException e) {
+            System.out.println("\nProceed to checkout\n");
+            new Button(webDriver, btnProceedToCheckout).click();
+        }
     }
 
     public ShippingPage fillAllFields(final String propertiesName) {
         String fullPropertiesName = propertiesName + ".properties";
+        waitForElementToBeClickable(txtEmailAddress);
         new TextField(webDriver, txtEmailAddress).fillIn(DataUtils.getPropertyValue(fullPropertiesName, "email"));
         new TextField(webDriver, txtFirstName).fillIn(DataUtils.getPropertyValue(fullPropertiesName, "name"));
         new TextField(webDriver, txtLasttName).fillIn(DataUtils.getPropertyValue(fullPropertiesName, "surname"));
@@ -49,8 +58,8 @@ public class ShippingPage extends PageObject {
         return this;
     }
 
-    public VerificationPage clickNext() {
+    public ReviewPaymentsPage clickNext() {
         new Button(webDriver, btnNext).click();
-        return new VerificationPage(webDriver);
+        return new ReviewPaymentsPage(webDriver);
     }
 }
